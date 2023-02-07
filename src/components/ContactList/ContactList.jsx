@@ -1,19 +1,24 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
-import { getFilter, getContacts } from 'redux/selectors';
+import { selectFilter, selectContacts } from 'redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
 import style from './ContactList.module.css';
 
 export const ContactList = () => {
-    const contacts = useSelector(getContacts);
-    const filters = useSelector(getFilter);
-    const dispatch = useDispatch();
+    // const contacts = useSelector(selectContacts);
+    // const filters = useSelector( selectFilter);
+     const dispatch = useDispatch();
 
+    const contacts = useSelector(selectContacts);
+    const statusFilter = useSelector(selectFilter);
+    const filteredContacts = contacts.filter(contact => contact.name.includes(statusFilter));
+    
     const handleDelete = id => {
         dispatch(deleteContact(id));
     }
-    const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filters.toLowerCase())
-  );
+    // const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filters.toLowerCase()));
+   
+    
 
   return (
     <>

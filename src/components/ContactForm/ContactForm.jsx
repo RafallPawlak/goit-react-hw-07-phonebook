@@ -1,13 +1,19 @@
 import { nanoid } from 'nanoid';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
 import style from './ContactForm.module.css';
+import { fetchContacts } from '../../redux/operations'; 
 
 export const ContactForm = () => {
-    const contacts = useSelector(getContacts);
+    const contacts = useSelector(selectContacts);
     const dispatch = useDispatch();
+
+    const pobierz = () => {
+        const dane = fetchContacts();
+        console.log(dane)
+    }
   
     const handleSubmit = event => {
         event.preventDefault();
@@ -56,6 +62,7 @@ export const ContactForm = () => {
             <button className={style.button} type="submit">
                 Add contact
             </button>
+            <button onClick={pobierz} type='button' >Pobierz</button>
         </form>
     );
 }
