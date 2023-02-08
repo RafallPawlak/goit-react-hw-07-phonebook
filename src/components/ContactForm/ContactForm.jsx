@@ -2,31 +2,24 @@ import { nanoid } from 'nanoid';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import style from './ContactForm.module.css';
-import { fetchContacts } from '../../redux/operations'; 
 
 export const ContactForm = () => {
     const contacts = useSelector(selectContacts);
     const dispatch = useDispatch();
-
-    const pobierz = () => {
-        const dane = fetchContacts();
-        console.log(dane)
-    }
   
     const handleSubmit = event => {
         event.preventDefault();
-        const form = event.target;
+        const form = event.currentTarget;
         const { name, number } = form.elements;
-
         const contact = {
             id: nanoid(),
             name: name.value,
             number: number.value,
         };
 
-    if (contacts.find(contact => contact.name === name.value)) {
+    if (contacts.items.find(contact => contact.name === name.value && contact.number === number.value )) {
       Report.warning(
         'Phonebook Warning',
         'The contact already exists with this name',
@@ -62,7 +55,6 @@ export const ContactForm = () => {
             <button className={style.button} type="submit">
                 Add contact
             </button>
-            <button onClick={pobierz} type='button' >Pobierz</button>
         </form>
     );
 }
