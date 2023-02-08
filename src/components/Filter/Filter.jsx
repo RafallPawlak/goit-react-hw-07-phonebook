@@ -7,7 +7,7 @@ export const Filter = () => {
     
     const inputFilter = event => {
         const value = event.target.value;
-        dispatch(setFilter(value));
+        dispatch(setFilter(value.toLowerCase()));
     }
     return (
         <label className={style.name}>
